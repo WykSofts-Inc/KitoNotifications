@@ -103,7 +103,7 @@ public struct KitoNotificationSettingsView: View {
 
     // MARK: Channels
 
-    private func channelRow(_ channel: Binding<KitoNotificationChannel>) -> some View {
+    private func channelRow(_ channel: Binding<KitoNotificationChannelSetting>) -> some View {
         HStack(spacing: theme.spacing.md) {
             Image(systemName: channel.wrappedValue.systemImage)
                 .font(.system(size: 15, weight: .semibold))
@@ -151,7 +151,7 @@ public struct KitoNotificationSettingsView: View {
             if preferences.quietHours.isEnabled {
                 Divider().padding(.leading, theme.spacing.lg)
                 HStack(spacing: theme.spacing.lg) {
-                    KitoQuietHoursDial(quietHours: preferences.quietHours)
+                    KitoNotificationQuietHoursDial(quietHours: preferences.quietHours)
                         .frame(width: 130, height: 130)
                     VStack(alignment: .leading, spacing: theme.spacing.md) {
                         timePicker("From", symbol: "moon.stars.fill", time: $preferences.quietHours.start)
@@ -200,7 +200,7 @@ public struct KitoNotificationSettingsView: View {
 }
 
 /// A 24-hour dial with the quiet window shaded, midnight at the top, and a hand at the time now.
-public struct KitoQuietHoursDial: View {
+public struct KitoNotificationQuietHoursDial: View {
     @Environment(\.kitoTheme) private var theme
     let quietHours: KitoQuietHours
     let now: Date
