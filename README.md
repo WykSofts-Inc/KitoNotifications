@@ -51,6 +51,9 @@ await center.refresh()                                 // center.pending, center
 @State private var items: [KitoInboxNotification] = …
 
 KitoNotificationInbox($items, grouping: .todayAndEarlier) { item in open(item) }
+
+// Handle a row's action button too — `onAction:` goes before the trailing `onOpen`:
+KitoNotificationInbox($items, onAction: { item in reply(to: item) }) { item in open(item) }
 ```
 
 Today / Earlier (or `.byDay`) sections, unread dots, filter chips, swipe to mark read or
@@ -80,10 +83,19 @@ cross midnight), previews, sounds and badges. Set `center.preferences` and foreg
 notifications on a switched-off channel, or during quiet hours, land silently in Notification
 Centre (time-sensitive ones can still break through).
 
+## Migrating to 0.2
+
+- `KitoNotificationChannel` is now `KitoNotificationChannelSetting`, and `KitoQuietHoursDial` is now
+  `KitoNotificationQuietHoursDial`, so KitoNotifications can be imported next to KitoSettings
+  (which has its own `KitoNotificationChannel` and `KitoQuietHoursDial`) without "ambiguous use"
+  errors. `KitoNotificationPreferences.channels` keeps its name.
+- `KitoNotificationInbox`'s trailing closure is now always `onOpen`. In 0.1 it bound to `onAction`
+  (with a compiler warning). Labelled calls — `onOpen: …, onAction: …` — compile as before.
+
 ## Installation
 
 ```swift
-.package(url: "https://github.com/WykSofts-Inc/KitoNotifications.git", from: "0.1.0")
+.package(url: "https://github.com/WykSofts-Inc/KitoNotifications.git", from: "0.2.0")
 ```
 
 Requires iOS 17 and KitoCore 1.1.0. Time-sensitive delivery needs the Time Sensitive

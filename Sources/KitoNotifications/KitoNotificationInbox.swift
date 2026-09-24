@@ -25,6 +25,33 @@ public struct KitoNotificationInbox: View {
 
     @State private var filter: KitoInboxFilter = .all
 
+    /// Creates an inbox whose rows call `onOpen` when tapped.
+    ///
+    /// `onOpen` is the last parameter, so a trailing closure is always `onOpen`. Pass `onAction:`
+    /// before it to handle a row's action button:
+    ///
+    /// ```swift
+    /// KitoNotificationInbox($items, onAction: { reply(to: $0) }) { item in open(item) }
+    /// ```
+    public init(
+        _ items: Binding<[KitoInboxNotification]>,
+        title: String = "Notifications",
+        grouping: KitoInboxGrouping = .todayAndEarlier,
+        showsFilters: Bool = true,
+        onAction: ((KitoInboxNotification) -> Void)? = nil,
+        onOpen: ((KitoInboxNotification) -> Void)?
+    ) {
+        self._items = items
+        self.title = title
+        self.grouping = grouping
+        self.showsFilters = showsFilters
+        self.onOpen = onOpen
+        self.onAction = onAction
+    }
+
+    /// Creates an inbox with `onOpen` before `onAction`, both optional — the 0.1 argument order.
+    /// A lone trailing closure picks the initializer above, so it means `onOpen`.
+    @_disfavoredOverload
     public init(
         _ items: Binding<[KitoInboxNotification]>,
         title: String = "Notifications",
@@ -33,12 +60,7 @@ public struct KitoNotificationInbox: View {
         onOpen: ((KitoInboxNotification) -> Void)? = nil,
         onAction: ((KitoInboxNotification) -> Void)? = nil
     ) {
-        self._items = items
-        self.title = title
-        self.grouping = grouping
-        self.showsFilters = showsFilters
-        self.onOpen = onOpen
-        self.onAction = onAction
+        self.init(items, title: title, grouping: grouping, showsFilters: showsFilters, onAction: onAction, onOpen: onOpen)
     }
 
     private var animation: Animation? { reduceMotion ? nil : .spring(response: 0.4, dampingFraction: 0.85) }

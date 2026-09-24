@@ -84,7 +84,7 @@ public struct KitoQuietHours: Equatable, Codable, Sendable {
 }
 
 /// A kind of notification people can turn on or off — usually one per category id.
-public struct KitoNotificationChannel: Identifiable, Hashable, Sendable {
+public struct KitoNotificationChannelSetting: Identifiable, Hashable, Sendable {
     public var id: String
     public var title: String
     public var subtitle: String
@@ -115,7 +115,7 @@ public struct KitoNotificationPreferences: Equatable, Sendable {
         case never = "Never"
     }
 
-    public var channels: [KitoNotificationChannel]
+    public var channels: [KitoNotificationChannelSetting]
     public var quietHours: KitoQuietHours
     /// Time-sensitive notifications still come through during quiet hours.
     public var allowsTimeSensitive: Bool
@@ -124,7 +124,7 @@ public struct KitoNotificationPreferences: Equatable, Sendable {
     public var showsBadges: Bool
 
     public init(
-        channels: [KitoNotificationChannel],
+        channels: [KitoNotificationChannelSetting],
         quietHours: KitoQuietHours = KitoQuietHours(isEnabled: false),
         allowsTimeSensitive: Bool = true,
         previews: Previews = .always,
@@ -142,12 +142,12 @@ public struct KitoNotificationPreferences: Equatable, Sendable {
     /// Orders, payments, messages and reminders on; offers off; quiet hours 22:00 – 07:00.
     public static let standard = KitoNotificationPreferences(
         channels: [
-            KitoNotificationChannel(.order, subtitle: "Confirmed, on the way, delivered"),
-            KitoNotificationChannel(.payment, subtitle: "Money in and out, receipts"),
-            KitoNotificationChannel(.message, subtitle: "Replies and mentions"),
-            KitoNotificationChannel(.reminder, subtitle: "Bills and bookings you set"),
-            KitoNotificationChannel(.security, subtitle: "New sign-ins and password changes"),
-            KitoNotificationChannel(.promo, subtitle: "Deals picked for you", isOn: false),
+            KitoNotificationChannelSetting(.order, subtitle: "Confirmed, on the way, delivered"),
+            KitoNotificationChannelSetting(.payment, subtitle: "Money in and out, receipts"),
+            KitoNotificationChannelSetting(.message, subtitle: "Replies and mentions"),
+            KitoNotificationChannelSetting(.reminder, subtitle: "Bills and bookings you set"),
+            KitoNotificationChannelSetting(.security, subtitle: "New sign-ins and password changes"),
+            KitoNotificationChannelSetting(.promo, subtitle: "Deals picked for you", isOn: false),
         ],
         quietHours: KitoQuietHours()
     )
