@@ -233,7 +233,7 @@ public struct KitoNotificationAction: Equatable, Sendable {
 
     /// A reply field.
     public static func reply(_ id: String = "reply", title: String = "Reply", placeholder: String = "Message") -> KitoNotificationAction {
-        KitoNotificationAction(id, title: title, systemImage: "arrowshape.turn.up.left.fill", textInputPlaceholder: placeholder)
+        KitoNotificationAction(id, title: title, systemImage: "arrowshape.turn.up.backward.fill", textInputPlaceholder: placeholder)
     }
 
     var options: UNNotificationActionOptions {
