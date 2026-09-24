@@ -92,6 +92,12 @@ Centre (time-sensitive ones can still break through).
 - `KitoNotificationInbox`'s trailing closure is now always `onOpen`. In 0.1 it bound to `onAction`
   (with a compiler warning). Labelled calls — `onOpen: …, onAction: …` — compile as before.
 
+## Right-to-left
+
+- Rows, the inbox, banners, progress lines and settings mirror automatically; swipe actions are the system's,
+  and banner drags are vertical, so both work unchanged in Arabic or Hebrew.
+- The built-in reply action's icon is `arrowshape.turn.up.backward.fill`, which points the right way in RTL.
+
 ## Installation
 
 ```swift
