@@ -1,5 +1,7 @@
 # KitoNotifications
 
+**[Documentation](https://wyksofts-inc.github.io/KitoNotifications/documentation/kitonotifications/)**
+
 Local notifications and an in-app notification centre in SwiftUI: permission (including
 provisional), scheduling, actions, the badge, and a delegate that shows notifications **while
 your app is open** — plus an inbox, in-app banners, a priming screen and a settings screen with
