@@ -97,7 +97,11 @@ public enum KitoNotificationTrigger: Equatable, Sendable {
         case .at(let date): return date.formatted(date: .abbreviated, time: .shortened)
         case .daily(let hour, let minute): return "Daily at \(Self.clock(hour, minute))"
         case .weekly(let weekday, let hour, let minute):
-            let names = Calendar(identifier: .gregorian).weekdaySymbols
+            // The rest of the summary is English, so name the day in English too. A calendar
+            // without a locale can fall back to short symbols ("Mon"), which read as "Mons".
+            var calendar = Calendar(identifier: .gregorian)
+            calendar.locale = Locale(identifier: "en_US_POSIX")
+            let names = calendar.weekdaySymbols
             let name = names[Self.clamp(weekday, 1...7) - 1]
             return "\(name)s at \(Self.clock(hour, minute))"
         case .every(let seconds): return "Every \(Self.durationText(max(seconds, 60)))"
